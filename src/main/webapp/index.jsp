@@ -1,16 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Пользователь
-  Date: 07.05.2024
-  Time: 16:52
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Spring MVC CRUD App</title>
 </head>
 <body>
-
+<h3>Spring MVC CRUD App presents</h3>
+<br/>
+<a href="../../books" target="_blank">Books list</a>
+<br/>
 </body>
 </html>

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
@@ -7,8 +7,6 @@
 <html>
 <head>
     <title>Books Page</title>
-    <meta charset="UTF-8">
-
     <style>
         .tg {
             border-collapse: collapse;
@@ -43,72 +41,51 @@
     </style>
 </head>
 <body>
-<a href="../index.jsp">Back to main menu</a>
-
+<a href="../../index.jsp">Back to main menu</a>
 <br/>
 <br/>
-
 <h1>Books List</h1>
-<p>listBooks</p>
-<!-- чтобы вывести атрибут -->
-<%= request.getAttribute("listBooks") %>
-<%= request.getAttribute("book")%>
-<c:out value="${listBooks}"/>
-<ul>
-    <c:forEach items="${listBooks}" var="item">
-        <li>${item}</li>
-    </c:forEach>
-</ul>
+<%--<!-- чтобы вывести атрибут модели -->--%>
+<%--<%= request.getAttribute("listBooks") %>--%>
+<%--<br/>--%>
+<%--<br/>--%>
+<%--<%= request.getAttribute("book")%>--%>
+<%--<br/>--%>
+<%--<br/>--%>
+<%--<c:out value="${listBooks}"/>--%>
+<%--<br/>--%>
+<%--<br/>--%>
+<%--<ul>--%>
+<%--    <c:forEach items="${listBooks}" var="item">--%>
+<%--        <li>${item}</li>--%>
+<%--    </c:forEach>--%>
+<%--</ul>--%>
 
-<table style="border:1px">
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-    </tr>
-    <c:forEach items="${listBooks}" var="book">
+<%--@elvariable id="listBooks" type=""--%>
+<c:if test="${!empty listBooks}">
+    <table class="tg">
         <tr>
-            <td>${book.bookTitle}</td>
-            <td>${book.bookAuthor}</td>
+            <th style="width:80px">ID</th>
+            <th style="width:120px">Title</th>
+            <th style="width:120px">Autor</th>
+            <th style="width:120px">Price</th>
+            <th style="width:60px">Edit</th>
+            <th style="width:60px">Delete</th>
         </tr>
-    </c:forEach>
-</table>
-
-
-<c:choose>
-    <c:when test="${empty listBooks}">
-        <p>The list is empty</p>
-<%--        <table class="tg">--%>
-<%--            <tr>--%>
-<%--                <th style="width:80px">ID</th>--%>
-<%--                <th style="width:120px">Title</th>--%>
-<%--                <th style="width:120px">Autor</th>--%>
-<%--                <th style="width:120px">Price</th>--%>
-<%--                <th style="width:60px">Edit</th>--%>
-<%--                <th style="width:60px">Delete</th>--%>
-<%--            </tr>--%>
-<%--            <c:forEach items="${listBooks}" var="book">--%>
-<%--            <tr>--%>
-<%--                <td style="width:80px">${book.id}</td>--%>
-<%--                <td style="width:120px">${book.bookTitle}</td>--%>
-<%--                <td style="width:120px">${book.bookAuthor}</td>--%>
-<%--                <td style="width:120px">${book.price/100}${book.price%100}</td>--%>
-<%--                <td style="width:60px"><a href="edit/${book.id}">Edit</a></td>--%>
-<%--                <td style="width:60px"><a href="remove/${book.id}">Delete</a></td>--%>
-<%--            </tr>--%>
-<%--            </c:forEach>--%>
-<%--        </table>--%>
-    </c:when>
-    <c:otherwise>
-        <p>The list is not empty</p>
-        <c:forEach items="bookList" var="book">
-            <p>book.bookTitle</p>
+        <c:forEach items="${listBooks}" var="book">
+            <tr>
+                <td style="width:80px">${book.id}</td>
+                <td style="width:120px"><a href="/bookdata/${book.id}" target="_blank">${book.bookTitle}</a></td>
+                <td style="width:120px">${book.bookAuthor}</td>
+                <td style="width:120px">${book.price/100}${book.price%100}</td>
+                <td style="width:60px"><a href="edit/${book.id}">Edit</a></td>
+                <td style="width:60px"><a href="remove/${book.id}">Delete</a></td>
+            </tr>
         </c:forEach>
-    </c:otherwise>
-</c:choose>
-
+    </table>
+</c:if>
 
 <h1>Add a Book</h1>
-
 <%--@elvariable id="book" type=""--%>
 <form:form action="/books/add" modelAttribute="book" method="post">
     <table>
@@ -121,7 +98,9 @@
                 </td>
                 <td>
                     <form:input path="id" readonly="true" size="8" disabled="true"/>
-<%--                    <form:hidden path="id"/>--%>
+                    <form:hidden path="id"/>
+                    <!-- запускается и работает именно в таком виде!!! -->
+                    <!-- с дублированным id -->
                 </td>
             </tr>
         </c:if>
